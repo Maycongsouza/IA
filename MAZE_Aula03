@@ -1,0 +1,123 @@
+import random
+
+# Dimensões do tabuleiro
+largura = 10
+altura = 10
+
+# Posição inicial do NPC
+npc_pos = [0, 0]
+
+# Posição inicial do NPC 2
+npc2_pos = [random.randint(0, largura - 1), random.randint(0, altura - 1)]
+
+# Posição aleatória do Jogador
+jogador_pos = [random.randint(0, largura - 1), random.randint(0, altura - 1)]
+
+# Lista de obstáculos que são gerados aleatórimente pelo tabuleiro
+obstaculos = [[random.randint(0, largura - 1), random.randint(0, altura - 1)],
+             [random.randint(0, largura - 1), random.randint(0, altura - 1)],
+             [random.randint(0, largura - 1), random.randint(0, altura - 1)]]
+
+# Velocidade dos NPCs
+npc_vel = 1
+npc2_vel = 2
+
+# Loop master
+while True:
+    # Imprime o tabuleiro
+    for y in range(altura):
+        for x in range(largura):
+            if [x, y] == npc_pos:
+                print("N", end="")
+            elif [x, y] == npc2_pos:
+                print("N2", end="")
+            elif [x, y] == jogador_pos:
+                print("J", end="")
+            elif [x, y] in obstaculos:
+                print("#", end="")
+            else:
+                print(".", end="")
+        print()
+
+    # Calcula a distância entre o NPC e o Jogador
+    distancia_npc = ((npc_pos[0] - jogador_pos[0]) ** 2 + (npc_pos[1] - jogador_pos[1]) ** 2) ** 0.5
+    print(f"Distância entre NPC e Jogador: {distancia_npc:.2f}")
+
+    # Calcula a distância entre o NPC 2 e o Jogador
+    distancia_npc2 = ((npc2_pos[0] - jogador_pos[0]) ** 2 + (npc2_pos[1] - jogador_pos[1]) ** 2) ** 0.5
+    print(f"Distância entre NPC 2 e Jogador: {distancia_npc2:.2f}")
+
+    # Movimenta o Jogador com as teclas de direção
+    direcao = input("Digite a direção (WASD): ")
+    if direcao == "w":
+        nova_pos = [jogador_pos[0], jogador_pos[1] - 1]
+    elif direcao == "a":
+        nova_pos = [jogador_pos[0] - 1, jogador_pos[1]]
+    elif direcao == "s":
+        nova_pos = [jogador_pos[0], jogador_pos[1] + 1]
+    elif direcao == "d":
+        nova_pos = [jogador_pos[0] + 1, jogador_pos[1]]
+    else:
+        continue
+
+    # Verifica se a nova posição do Jogador é válida
+    if nova_pos[0] < 0 or nova_pos[0] >= largura or nova_pos[1] < 0 or nova_pos[1] >= altura:
+        continue
+    if nova_pos in obstaculos:
+        continue
+
+    # Atualiza a posição do Jogador
+    jogador_pos = nova_pos
+
+    # Verifica se não há um obstáculo para onde o NPC 1 quer ir
+    if [npc_pos[0] + npc_vel, npc_pos[1]] not in obstaculos and npc_pos[0] + npc_vel < largura:
+        npc_pos[0] += npc_vel
+    elif [npc_pos[0] - npc_vel, npc_pos[1]] not in obstaculos and npc_pos[0] - npc_vel >= 0:
+        npc_pos[0] -= npc_vel
+    elif [npc_pos[0], npc_pos[1] + npc_vel] not in obstaculos and npc_pos[1] + npc_vel < altura:
+        npc_pos[1] += npc_vel
+    elif [npc_pos[0], npc_pos[1] - npc_vel] not in obstaculos and npc_pos[1] - npc_vel >= 0:
+        npc_pos[1] -= npc_vel
+
+    # Movimenta o primeiro NPC em direção ao Jogador
+    dx = jogador_pos[0] - npc_pos[0]
+    dy = jogador_pos[1] - npc_pos[1]
+    if abs(dx) > abs(dy):
+        if dx > 0:
+            npc_pos[0] += npc_vel
+        else:
+            npc_pos[0] -= npc_vel
+    else:
+        if dy > 0:
+            npc_pos[1] += npc_vel
+        else:
+            npc_pos[1] -= npc_vel
+
+    # Verifica se não há um obstáculo para onde o NPC 2 quer ir
+    if [npc2_pos[0] + npc2_vel, npc2_pos[1]] not in obstaculos and npc2_pos[0] + npc2_vel < largura:
+        npc2_pos[0] += npc2_vel
+    elif [npc2_pos[0] - npc2_vel, npc2_pos[1]] not in obstaculos and npc2_pos[0] - npc2_vel >= 0:
+        npc2_pos[0] -= npc2_vel
+    elif [npc2_pos[0], npc2_pos[1] + npc2_vel] not in obstaculos and npc2_pos[1] + npc2_vel < altura:
+        npc2_pos[1] += npc2_vel
+    elif [npc2_pos[0], npc2_pos[1] - npc2_vel] not in obstaculos and npc2_pos[1] - npc2_vel >= 0:
+        npc2_pos[1] -= npc2_vel
+
+    # Movimenta o segundo NPC em direção ao Jogador
+    dx = jogador_pos[0] - npc2_pos[0]
+    dy = jogador_pos[1] - npc2_pos[1]
+    if abs(dx) > abs(dy):
+        if dx > 0:
+            npc2_pos[0] += npc2_vel
+        else:
+            npc2_pos[0] -= npc2_vel
+    else:
+        if dy > 0:
+            npc2_pos[1] += npc2_vel
+        else:
+            npc2_pos[1] -= npc2_vel
+
+    # Verifica se um NPC pegou o jogador
+    if npc_pos == jogador_pos or npc2_pos == jogador_pos:
+        print(f"GAME OVER - PEGO PELO NPC na posição {jogador_pos}")
+        break
