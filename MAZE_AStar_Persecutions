@@ -1,6 +1,9 @@
+# INSTALAR AS LIBS numpy, pathfinding, Grid e AStarFinder
+# pip ou pip3 install <nome_da_lib>
+
 import random
 import numpy as np
-from pathfinding.core.grid import Grid
+from pathfinding.core.grid import , 
 from pathfinding.finder.a_star import AStarFinder
 
 # Dimensões do tabuleiro
