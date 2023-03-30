@@ -33,7 +33,8 @@ custo = np.ones((altura, largura))
 for obst in obstaculos:
     custo[obst[1], obst[0]] = 99999
 
-def can_move_to(pos, prox_pos):
+# Função que faz a verificação se é possível se mover para a próxima posição
+def ver_movimento(pos, prox_pos):
     if prox_pos in obstaculos:
         return False
     x1, y1 = pos
@@ -44,6 +45,7 @@ def can_move_to(pos, prox_pos):
         return False
     return True
 
+# Função que move o personagem jogável pelo cenário
 def find_path(start, end):
     grid = Grid(matrix=custo)
     start_node = grid.node(start[0], start[1])
@@ -52,6 +54,8 @@ def find_path(start, end):
     path, _ = finder.find_path(start_node, end_node, grid)
     return path
 
+
+# Função que move os NPC's
 def move_npc(npc_pos, J1):
     path = find_path(npc_pos, J1)
     if len(path) > 1:
@@ -98,7 +102,7 @@ while True:
         prox_pos[0] += 1
 
     # Verifica se o jogador pode se mover para a próxima posição
-    if not can_move_to(J1, prox_pos):
+    if not ver_movimento(J1, prox_pos):
         print("Movimento inválido!")
         continue
 
