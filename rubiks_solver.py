@@ -10,8 +10,11 @@ passos_aleatorios = Formula()
 
 # Dentro da classe, chamamos a função random, que irá misturar o cubo
 random = passos_aleatorios.random()
-print(random)
+# Passamos as passos aleatórios para o cubo
 cubo(random)
+
+# Mostrando os passos aleatórios que foram usados
+print(random)
 
 # Função para exibir o cubo com as cores
 def exibe_cubo():
@@ -26,6 +29,14 @@ def exibe_cubo():
     }
 
     # A ordem da visualização é ---> ULFRBD
+    """
+        U: Upper (superior)
+        D: Down (inferior)
+        F: Front (frontal)
+        B: Back (traseira)
+        R: Right (direita)
+        L: Left (esquerda)
+    """
 
     print("             {}".format(faces["U"][0]))
     print("             {}".format(faces["U"][1]))
