@@ -94,4 +94,7 @@ while True:
         resolver_cubo()
         break
     else:
-        rodar_cubo(mover)
+        try:
+            rodar_cubo(mover)
+        except:
+            print('Entrada inválida')
