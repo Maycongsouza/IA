@@ -6,11 +6,12 @@ from pycuber.solver import CFOPSolver
 cubo = Cube()
 
 # Para gerar posições aleatórias no cubo, chamamos a classe Formula
-cubo_aleatorio = Formula()
+passos_aleatorios = Formula()
 
 # Dentro da classe, chamamos a função random, que irá misturar o cubo
-random_alg = cubo_aleatorio.random()
-cubo(cubo_aleatorio)
+random = passos_aleatorios.random()
+print(random)
+cubo(random)
 
 # Função para exibir o cubo com as cores
 def exibe_cubo():
@@ -80,6 +81,12 @@ def resolver_cubo():
 
 # Looping contínuo até o cubo ser resolvido
 while True:
+    # Entradas aceitas
+    """
+        * Um giro no sentido horário de 90 graus: R, U, F, D, B e L.
+        * Um giro no sentido anti-horário de 90 graus: R', U', F', D', B' e L'.
+        * Um giro de 180 graus: R2, U2, F2, D2, B2 e L2.
+    """
     exibe_cubo()
     print("Dê um comando para mover (ou escreva 'solucao' para solucionar o cubo):")
     mover = input(">>> ")
