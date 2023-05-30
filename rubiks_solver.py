@@ -1,3 +1,4 @@
+
 # Para executar o código, é preciso instalar a biblioteca pycuber
 from pycuber import *
 from pycuber.solver import CFOPSolver
@@ -17,7 +18,7 @@ cubo(random)
 print(random)
 
 # Função para exibir o cubo com as cores
-def exibe_cubo():
+def exibe_cubo(cubo):
     # Fizemos um dict para visualizar cada face do cubo
     faces = {
         "U": cubo.get_face("U"),
@@ -84,11 +85,15 @@ def rodar_cubo(mover):
 
 # Função que resolve o cubo através do método CFOP para Cubos Mágicos
 def resolver_cubo():
-    resolver = CFOPSolver(cubo)
+    cubo_resolvido = cubo
+    resolver = CFOPSolver(cubo_resolvido)
     solucao = resolver.solve(suppress_progress_messages=True)
+    lista_entradas = solucao
+    for i in lista_entradas:
+        print(exibe_cubo(cubo(i)))
     print("Passo a passo da Solução:\n", solucao)
     print("\nCubo resolvido:\n")
-    print(exibe_cubo())
+    print(exibe_cubo(cubo_resolvido))
 
 # Looping contínuo até o cubo ser resolvido
 while True:
@@ -98,7 +103,7 @@ while True:
         * Um giro no sentido anti-horário de 90 graus: R', U', F', D', B' e L'.
         * Um giro de 180 graus: R2, U2, F2, D2, B2 e L2.
     """
-    exibe_cubo()
+    exibe_cubo(cubo)
     print("Dê um comando para mover (ou escreva 'solucao' para solucionar o cubo):")
     mover = input(">>> ")
     if mover == "solucao":
