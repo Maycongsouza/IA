@@ -2,6 +2,20 @@
 from pycuber import *
 from pycuber.solver import CFOPSolver
 
+# Formamos o cubo
+cubo = Cube()
+cubo_solve = cubo.copy()
+# Para gerar posições aleatórias no cubo, chamamos a classe Formula
+passos_aleatorios = Formula()
+
+# Dentro da classe, chamamos a função random, que irá misturar o cubo
+random = passos_aleatorios.random()
+# Passamos as passos aleatórios para o cubo
+cubo(random)
+
+# Mostrando os passos aleatórios para a geração do cubo
+print(random)
+
 # Função para exibir o cubo com as cores
 def exibe_cubo(cubo):
     # Fizemos um dict para visualizar cada face do cubo
@@ -55,24 +69,6 @@ def exibe_cubo(cubo):
     print("             {}".format(faces["D"][1]))
     print("             {}".format(faces["D"][2]))
 
-
-# Formamos o cubo
-cubo = Cube()
-cubo_test = Cube()
-print(exibe_cubo(cubo))
-
-# Para gerar posições aleatórias no cubo, chamamos a classe Formula
-passos_aleatorios = Formula()
-
-# Dentro da classe, chamamos a função random, que irá misturar o cubo
-random = passos_aleatorios.random()
-# Passamos as passos aleatórios para o cubo
-cubo(random)
-cubo_test(random)
-
-# Mostrando os passos aleatórios que foram usados
-print(random)
-
 # Função que usamos para o cubo ser rotacionado,
 # ela recebe como parâmetro a variável mover, que contém a entrada do usuário
 def rodar_cubo(mover):
@@ -88,17 +84,16 @@ def rodar_cubo(mover):
 
 # Função que resolve o cubo através do método CFOP para Cubos Mágicos
 def resolver_cubo():
+    cubo_solve = cubo.copy()
+    exibe_cubo(cubo_solve)
     resolver = CFOPSolver(cubo)
     solucao = resolver.solve(suppress_progress_messages=True)
     for i in solucao:
-        test = str(i)
-        cubo_test(test)
-        print(test)
-        # print(cubo_test)
-        print(exibe_cubo(cubo_test))
+        cubo_solve(i)
+        print(i)
+        print(exibe_cubo(cubo_solve))
     print("Passo a passo da Solução:\n", solucao)
-    print("\nCubo resolvido:\n")
-    print(exibe_cubo(cubo))
+    print("\nO cubo foi resolvido!\n")
 
 # Looping contínuo até o cubo ser resolvido
 while True:
