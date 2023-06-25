@@ -1,6 +1,25 @@
+##### SUDOKU #####
+<Maycon e Antônio>
+1. Apenas executar o código, não precisa de nenhuma lib específica.
+
+
+##### GRAFO DE 3 CORES #####
+<Maycon e Antônio>
+1. Antes de executar o script, é preciso instalar a lib pygame: pip install pygame
+2. Depois é só executar que o grafo será exibido conforme proposto no exercício
+   com a lógica das três cores já resolvida.
+3. Foram usadas as cores Azul, Vermelha e Amarela
+
+
+##### SEND MORE MONEY #####
+<Maycon e Antônio>
+1. Apenas executar o código, não precisa de nenhuma lib específica.
+2. A lógica utilizada é a de força bruta.
+
+
+
 ##### CUBO MÁGICO #####
 <Maycon e Antônio>
-
 1. Para rodar o script, basta instalar a versão 3.8 do Python.
 2. Após, basta instalar a biblioteca pycuber usando o comando:
 Windows: pip install pycuber
