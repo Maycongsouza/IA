@@ -1,7 +1,9 @@
 import random
 
-# Função para imprimir o tabuleiro
 def imprimir_tabuleiro(tabuleiro):
+    """
+        Função que gera o tabuleiro para ser exibido no terminal
+    """
     for i in range(len(tabuleiro)):
         if i % 3 == 0 and i != 0:
             print("- - - - - - - - - - - -")
@@ -13,11 +15,16 @@ def imprimir_tabuleiro(tabuleiro):
             else:
                 print(str(tabuleiro[i][j]) + " ", end="")
 
-# Função para gerar um jogo de Sudoku aleatório
 def gerar_sudoku():
+    """
+        Aqui o jogo é gerado aleatórimanete de acordo com alguns parâmetros.
+        1 - É criado o tabuleiro
+        2 - Ele resolve o tabuleiro preenchendo os espaços vazios com números diferentes
+        3 - Altera o tabuleiro substituindo aleatoriamente os números de um tabuleiro resolvido por 0
+    """
     tabuleiro = [[0 for _ in range(9)] for _ in range(9)]
     resolver_sudoku(tabuleiro)
-    vazios = random.randint(40, 60)  # Quantidade de espaços vazios no tabuleiro
+    vazios = random.randint(50, 60)  # Quantidade de espaços vazios no tabuleiro Ex: Terá entre x e x espaços vazios
     while vazios > 0:
         linha = random.randint(0, 8)
         coluna = random.randint(0, 8)
@@ -26,8 +33,11 @@ def gerar_sudoku():
             vazios -= 1
     return tabuleiro
 
-# Função para resolver o Sudoku
 def resolver_sudoku(tabuleiro):
+    """
+        Essa função tem como objetivo resolver o jogo.
+        Ela faz uma varredura no tabuleiro verificando linha e coluna e adicionando os números.
+    """
     vazio = encontrar_vazio(tabuleiro)
     if not vazio:
         return True
@@ -45,9 +55,13 @@ def resolver_sudoku(tabuleiro):
 
     return False
 
-# Função auxiliar para verificar se um número é válido em uma determinada posição
 def numero_valido(tabuleiro, numero, posicao):
-    # Verifica a linha
+    """
+        Essa é a função que verifica se a posição da linha e coluna não tem o número
+        repetido, de acordo com a entrada do jogador.
+    """
+
+    # Verifica linha
     for i in range(len(tabuleiro[0])):
         if tabuleiro[posicao[0]][i] == numero and posicao[1] != i:
             return False
@@ -57,7 +71,13 @@ def numero_valido(tabuleiro, numero, posicao):
         if tabuleiro[i][posicao[1]] == numero and posicao[0] != i:
             return False
 
-    # Verifica o bloco 3x3
+    """
+    A variável bloco_x representa a coluna do bloco 3x3 em que a posição se encontra,
+    e é calculada dividindo a coluna da posição por 3 (usando divisão inteira //).
+    Da mesma forma funciona a variável bloco_y representa a linha do bloco 3x3 em que a posição se encontra, 
+    e é calculada dividindo a linha da posição por 3 (usando divisão inteira //).
+    """
+
     bloco_x = posicao[1] // 3
     bloco_y = posicao[0] // 3
 
@@ -68,24 +88,38 @@ def numero_valido(tabuleiro, numero, posicao):
 
     return True
 
-# Função auxiliar para encontrar uma posição vazia no tabuleiro
 def encontrar_vazio(tabuleiro):
+    """
+        Encontra espaços vazios no tabuleiro, ou seja, posições com número 0.
+        Caso não encontre nenhuma, retorna que None, ou seja, não existem
+        espaços com número zero (vazios) no tabuleiro
+    """
     for i in range(len(tabuleiro)):
         for j in range(len(tabuleiro[0])):
             if tabuleiro[i][j] == 0:
                 return (i, j)
     return None
 
-# Função para verificar se o jogador venceu o jogo
 def tabuleiro_completo(tabuleiro):
+    """
+         Função que verifica se não existem mais espaços com número zero.
+         Essa função, declara se o jogador, venceu o jogo ou não.
+    """
     for i in range(len(tabuleiro)):
         for j in range(len(tabuleiro[0])):
             if tabuleiro[i][j] == 0:
                 return False
     return True
 
-# Função principal do jogo de Sudoku
+
 def jogar_sudoku():
+    """
+        Essa é a função principal do jogo.
+        1 - Geramos o tabuleiro aleatóriamente
+        2 - Depois, chamamos a função que vai imprimir o tabuleiro no terminal
+        3 - No looping while, é onde o jogador poderá realizar as entradas de linha, coluna e valor a ser inserido.
+        4 - Também é possível digitar "resolver" para terminar o jogo.
+    """
     tabuleiro = gerar_sudoku()
     print("Bem-vindo ao jogo de Sudoku! Digite 'dica' a qualquer momento para obter uma dica.")
     imprimir_tabuleiro(tabuleiro)
@@ -118,11 +152,11 @@ def jogar_sudoku():
         else:
             print("Movimento inválido. Tente novamente.")
 
-        dica = input("Digite 'dica' para obter uma dica ou pressione Enter para continuar: ")
-        if dica.lower() == "dica":
+        resolver = input("Digite 'resolver' para preencher todas as posições automaticamente: ")
+        if resolver.lower() == "resolver":
             resolver_sudoku(tabuleiro)
             imprimir_tabuleiro(tabuleiro)
             print("")
 
-# Iniciar o jogo
+# Iniciando o jogo
 jogar_sudoku()
